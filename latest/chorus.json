@@ -1,0 +1,20 @@
+{
+ "date": "2026-10-17",
+ "clip_sec": 3.0,
+ "order": [
+  "Eastern Bluebird",
+  "Carolina Wren",
+  "Carolina Wren",
+  "Carolina Wren",
+  "Carolina Chickadee",
+  "Carolina Wren"
+ ],
+ "clips": [
+  "2026/10/sialia_sialis_99p_20261017T085348Z.flac",
+  "2026/10/thryothorus_ludovicianus_95p_20261017T085353Z.flac",
+  "2026/10/thryothorus_ludovicianus_95p_20261017T085417Z.flac",
+  "2026/10/thryothorus_ludovicianus_73p_20261017T085449Z.flac",
+  "2026/10/poecile_carolinensis_97p_20261017T085506Z.flac",
+  "2026/10/thryothorus_ludovicianus_94p_20261017T085548Z.flac"
+ ]
+}

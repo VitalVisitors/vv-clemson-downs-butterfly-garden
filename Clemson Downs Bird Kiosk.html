@@ -1,0 +1,592 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clemson Downs Bird Kiosk</title>
+<!-- Icons: Phosphor Icons (MIT), phosphoricons.com -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap">
+<style>
+/* Layout: one calm home screen with three huge touch tiles; each tile opens a full-screen view that returns home on its own. */
+:root {
+  --bg: #e9f0ec;
+  --panel: #ffffff;
+  --fg: #1b2a26;
+  --muted: #536a61;
+  --pine: #2e5a4c;
+  --gold: #e2b52a;
+  --gold-ink: #2a2206;
+  --line: #c9d7d0;
+  --display: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111916; --panel: #1b2622; --fg: #e7efe9; --muted: #9fb4aa;
+    --pine: #86c2ac; --gold: #e8bf45; --gold-ink: #241c03; --line: #2d3c37;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111916; --panel: #1b2622; --fg: #e7efe9; --muted: #9fb4aa;
+  --pine: #86c2ac; --gold: #e8bf45; --gold-ink: #241c03; --line: #2d3c37;
+  color-scheme: dark;
+}
+[hidden] { display: none !important; }
+/* App-style: the page itself never scrolls; each screen fills the window */
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+body {
+  height: 100dvh; margin: 0; touch-action: manipulation;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: clamp(18px, 2.2vw, 24px); line-height: 1.45;
+  padding-inline: clamp(16px, 4vw, 48px); padding-block: clamp(16px, 3vw, 36px);
+  box-sizing: border-box; -webkit-user-select: none; user-select: none;
+}
+* { box-sizing: border-box; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible { outline: 4px solid var(--gold); outline-offset: 4px; }
+
+.screen { display: flex; flex-direction: column; gap: clamp(12px, 2.4vw, 28px); height: 100%; max-width: 1200px; margin: 0 auto; overflow-y: auto; scrollbar-width: none; }
+.screen::-webkit-scrollbar { display: none; }
+#home { justify-content: space-between; }
+
+header.top { text-align: center; }
+.place { font-size: .8em; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5.5vw, 64px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.clock { text-align: center; font-variant-numeric: tabular-nums; }
+.clock b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(24px, 3.2vw, 38px); color: var(--muted); }
+.clock span { color: var(--muted); }
+
+.sample-note { align-self: flex-start; background: var(--panel); border: 2px dashed var(--line); border-radius: 999px; padding: .3em .9em; color: var(--muted); font-size: .8em; }
+
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2.5vw, 28px); width: min(100%, calc((100dvh - clamp(200px, 30vh, 290px)) * 3 + 56px)); margin: 0 auto; align-items: center; }
+.tile {
+  position: relative; display: block; width: 100%; padding: 0; aspect-ratio: 1 / 1; max-width: 100%; overflow: hidden;
+  background: var(--panel); border: 3px solid var(--line); border-radius: 28px;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.tile:active { transform: scale(.98); border-color: var(--pine); }
+.tile .paint { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.tile:active .paint { transform: scale(1.03); }
+.tile-label { position: absolute; left: 0; right: 0; bottom: 0; padding: .45em .6em .5em; display: flex; align-items: center; justify-content: center; text-align: center; font-family: var(--display); font-weight: 800; font-size: clamp(13px, 1.75vw, 22px); line-height: 1.12; color: #f8f5ec; background: rgba(8, 14, 12, .66); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.tile .playmark { position: absolute; left: 70%; top: 38%; width: 22%; aspect-ratio: 1 / 1; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(248, 245, 236, .78); box-shadow: 0 6px 22px rgba(0, 0, 0, .25); }
+.tile .playmark::after { content: ""; position: absolute; left: 38%; top: 28%; width: 34%; height: 44%; background: rgba(8, 14, 12, .78); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+
+/* sub views */
+.view-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.view-head h2 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4.6vw, 54px); margin: 0; line-height: 1.1; }
+.home-btn { background: var(--pine); color: var(--bg); border: 0; border-radius: 999px; padding: .6em 1.4em; font-weight: 700; font-size: 1.05em; }
+
+.progress { height: 14px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; background: var(--pine); }
+
+/* dawn chorus */
+.chorus { display: flex; justify-content: center; align-items: center; width: 100%; flex: 1; }
+.sky { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 16 / 9; width: min(100%, 1100px, calc((100vh - 220px) * 16 / 9)); max-width: 100%; background: linear-gradient(#2b3d5c, #c98d5e 75%, #f2c46d); }
+.sky canvas, .sky video { width: 100%; height: 100%; display: block; object-fit: cover; }
+/* Full-width bars across the top and bottom of the sunrise picture, one type size and color */
+.sky .bug, .sky .lower { position: absolute; left: 0; right: 0; padding: .6em 1.2em; font-size: .8em; font-weight: 700; line-height: 1.3; color: #f6f3ea; background: rgba(8, 14, 12, .7); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.sky .bug.topbar { top: 0; padding-right: 7em; }
+.sky .bug.time { top: 0; left: auto; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-variant-numeric: tabular-nums; }
+.sky .lower { bottom: 0; }
+.sky .lower .kicker { display: none; }
+.reel #reel { position: absolute; inset: 0; }
+.reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+.drawing { background: var(--panel); border: 2px solid var(--line); border-radius: 20px; padding: 12px; }
+.drawing img { display: block; width: 100%; max-height: 60vh; object-fit: contain; border-radius: 12px; }
+.heard h3 { margin: 0 0 .5em; font-size: 1em; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { display: inline-flex; align-items: center; gap: .5em; background: var(--panel); border: 2px solid var(--line); border-radius: 999px; padding: .35em .9em .35em .4em; animation: pop .4s ease both; }
+.chip svg { width: 44px; height: 36px; }
+@keyframes pop { from { transform: scale(.7); opacity: 0; } to { transform: none; opacity: 1; } }
+.recorded { color: var(--muted); margin-top: 1em; }
+
+/* reel */
+.sky.reel { background: var(--panel); }
+.slide { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity .8s ease; }
+.slide.on { opacity: 1; }
+.slide .stage { width: 62%; max-width: 520px; animation: drift 5.5s ease-in-out both; }
+@keyframes drift { from { transform: scale(1) translateX(-3%); } to { transform: scale(1.08) translateX(3%); } }
+.slide .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: .9em 1.2em; background: linear-gradient(transparent, color-mix(in srgb, var(--panel) 92%, transparent) 35%); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
+.slide .cap b { font-family: var(--display); font-weight: 800; font-size: 1.4em; }
+.slide .cap span { color: var(--muted); font-variant-numeric: tabular-nums; }
+.feeder-scene { width: 100%; height: auto; }
+
+/* today's birds */
+.activity { background: var(--panel); border: 2px solid var(--line); border-radius: 20px; padding: 16px 20px; }
+.activity h3 { margin: 0 0 8px; font-size: .9em; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.bars { display: grid; grid-template-columns: repeat(24, 1fr); align-items: end; gap: 3px; height: 90px; }
+.bars i { display: block; background: var(--pine); border-radius: 4px 4px 0 0; min-height: 3px; }
+.bars i.peak { background: var(--gold); }
+.hours { display: grid; grid-template-columns: repeat(24, 1fr); font-size: .65em; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.hours span { text-align: center; }
+.guide { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: clamp(12px, 2vw, 20px); }
+.card { background: var(--panel); border: 2px solid var(--line); border-radius: 20px; padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+.card svg { width: 100%; height: auto; max-height: 150px; }
+.card b { font-family: var(--display); font-weight: 800; font-size: 1.15em; }
+.card span { color: var(--muted); font-size: .85em; font-variant-numeric: tabular-nums; }
+
+.idle-note { color: var(--muted); font-size: .8em; text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide .stage, .chip { animation: none; }
+  .slide { transition: none; }
+}
+</style>
+
+<div id="home" class="screen">
+  <header class="top">
+    <h1>Birds at Clemson Downs</h1>
+  </header>
+  <div class="tiles">
+    <button class="tile" id="tChorus" aria-label="Sunrise and dawn chorus">
+      <img class="paint" src="tile-dawn.jpg" alt="" aria-hidden="true">
+      <span class="tile-label">Dawn Chorus<br>at Sunrise</span>
+    </button>
+    <button class="tile" id="tReel" aria-label="Feeder highlights">
+      <img class="paint" src="tile-videos.jpg" alt="" aria-hidden="true"><span class="playmark" aria-hidden="true"></span>
+      <span class="tile-label">Videos at<br>Bird Feeder</span>
+    </button>
+    <button class="tile" id="tToday" aria-label="Today's birds">
+      <img class="paint" src="tile-birds.jpg" alt="" aria-hidden="true">
+      <span class="tile-label">Today’s Bird<br>Species</span>
+    </button>
+  </div>
+  <div class="clock"><b id="clockDate"></b><span id="clockTime" hidden></span></div>
+</div>
+
+<div id="vChorus" class="screen" hidden>
+  <div class="view-head"><h2>Dawn Chorus at Sunrise</h2><button class="home-btn" data-home>Back to start</button></div>
+  <div class="progress"><i id="chorusBar"></i></div>
+  <div class="chorus">
+    <div class="sky"><canvas id="skyCanvas" width="800" height="600"></canvas><video id="sunVideo" muted playsinline preload="auto" hidden></video><div class="bug topbar" id="sunPlace" hidden></div><div class="bug time" id="sunTime" hidden></div><div class="lower" id="sunCap" hidden><div class="kicker" id="capKicker"></div><div class="headline" id="capHead"></div></div></div>
+    <div class="heard" hidden>
+      <h3>Singing now</h3>
+      <div class="chips" id="chips"></div>
+      <p class="recorded" id="chorusNote">Recorded outside the courtyard at sunrise. This preview plays a recreated chorus.</p>
+    </div>
+  </div>
+</div>
+
+<div id="vReel" class="screen" hidden>
+  <div class="view-head"><h2>Videos at Bird Feeder</h2><button class="home-btn" data-home>Back to start</button></div>
+  <div class="progress"><i id="reelBar"></i></div>
+  <div class="chorus"><div class="sky reel"><div id="reel"></div><video id="reelVideo" muted playsinline preload="auto" hidden></video><div class="bug topbar" id="reelPlace" hidden></div><div class="bug time" id="reelTime" hidden></div></div></div>
+</div>
+
+<div id="vToday" class="screen" hidden>
+  <div class="view-head"><h2>Today’s Bird Species</h2><button class="home-btn" data-home>Back to start</button></div>
+  <div class="progress"><i id="todayBar"></i></div>
+  <div class="drawing" id="drawing" hidden><img id="drawingImg" alt="Hand-drawn illustration of today's birds"></div>
+  <div class="activity">
+    <h3>Songs heard by hour</h3>
+    <div class="bars" id="bars"></div>
+    <div class="hours" id="hours"></div>
+  </div>
+  <div class="guide" id="guide"></div>
+  <div class="idle-note" id="todayNote">Sample day shown.</div>
+</div>
+
+<script>
+// ---------- Bird illustrations (simple, friendly field-guide style) ----------
+const SPECIES = {
+  cardinal:  { name: "Northern Cardinal",      body:"#c4282d", belly:"#d8413f", head:"#c4282d", wing:"#9e1f24", tail:"#9e1f24", beak:"#f0883a", crest:true, mask:"#1b1b1b" },
+  chickadee: { name: "Carolina Chickadee",     body:"#9aa3a6", belly:"#f1ece2", head:"#f5f2ec", wing:"#7a8488", tail:"#6e777b", beak:"#2a2a2a", cap:"#1c1c1c", bib:"#1c1c1c" },
+  titmouse:  { name: "Tufted Titmouse",        body:"#a8b0b8", belly:"#efeae3", head:"#a8b0b8", wing:"#8e969e", tail:"#878f97", beak:"#2a2a2a", crest:true, flank:"#d99f74" },
+  wren:      { name: "Carolina Wren",          body:"#a05d2d", belly:"#e7c290", head:"#a05d2d", wing:"#7c4421", tail:"#7c4421", beak:"#5d4c3c", brow:"#f6efe2", cocked:true },
+  goldfinch: { name: "American Goldfinch",     body:"#b8a54a", belly:"#e4dba8", head:"#b8a54a", wing:"#2a2a2a", tail:"#2a2a2a", beak:"#d7a35a", bars:"#f3efe0" },
+  finch:     { name: "House Finch",            body:"#a78c73", belly:"#ebdfcf", head:"#d14649", wing:"#8a6f57", tail:"#7d644e", beak:"#8a7a6a" },
+  downy:     { name: "Downy Woodpecker",       body:"#f2f0ea", belly:"#f7f5f0", head:"#f7f5f0", wing:"#222222", tail:"#222222", beak:"#333333", cap:"#222222", nape:"#d23a3a", bars:"#f7f5f0" },
+  nuthatch:  { name: "White-breasted Nuthatch", body:"#8ea2b6", belly:"#fafafa", head:"#fafafa", wing:"#6f88a2", tail:"#5d7186", beak:"#2a2a2a", cap:"#1e1e1e" }
+};
+
+function birdSVG(key, opts = {}) {
+  const s = SPECIES[key];
+  const tilt = s.cocked ? -12 : 0;
+  let g = "";
+  if (opts.branch !== false) g += `<path d="M6 86 Q60 80 116 88" stroke="#6b4f36" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  g += `<g transform="rotate(${tilt} 55 58)">`;
+  g += `<polygon points="30,58 4,${s.cocked ? 30 : 70} 12,${s.cocked ? 26 : 78}" fill="${s.tail}"/>`;
+  g += `<ellipse cx="54" cy="58" rx="30" ry="21" fill="${s.body}"/>`;
+  g += `<ellipse cx="60" cy="66" rx="22" ry="13" fill="${s.belly}"/>`;
+  if (s.flank) g += `<ellipse cx="50" cy="68" rx="9" ry="5" fill="${s.flank}" opacity=".85"/>`;
+  g += `<ellipse cx="46" cy="54" rx="19" ry="11" fill="${s.wing}" transform="rotate(-12 46 54)"/>`;
+  if (s.bars) g += `<path d="M34 52 L56 49 M36 57 L57 55" stroke="${s.bars}" stroke-width="3" stroke-linecap="round"/>`;
+  g += `</g>`;
+  if (s.crest) g += `<polygon points="76,26 70,6 90,22" fill="${s.head}"/>`;
+  g += `<circle cx="84" cy="36" r="16" fill="${s.head}"/>`;
+  if (s.cap) g += `<path d="M68 34 A16 16 0 0 1 100 32 L96 30 Q84 24 70 36 Z" fill="${s.cap}"/>`;
+  if (s.nape) g += `<circle cx="71" cy="30" r="4" fill="${s.nape}"/>`;
+  if (s.bib) g += `<path d="M84 44 Q92 54 98 44 Z" fill="${s.bib}"/>`;
+  if (s.mask) g += `<path d="M90 30 Q101 34 100 44 Q92 46 86 40 Z" fill="${s.mask}"/>`;
+  if (s.brow) g += `<path d="M76 30 Q86 26 97 31" stroke="${s.brow}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  g += `<circle cx="91" cy="34" r="3" fill="#111"/><circle cx="92" cy="33" r="1" fill="#fff"/>`;
+  g += `<polygon points="98,35 ${s.cap && key === "downy" ? 116 : 112},38 98,42" fill="${s.beak}"/>`;
+  g += `<path d="M50 78 L48 86 M60 78 L60 86" stroke="#6a5644" stroke-width="2.5" stroke-linecap="round"/>`;
+  return `<svg viewBox="0 0 120 92" role="img" aria-label="${s.name}">${g}</svg>`;
+}
+
+
+// ---------- Screens, clock and idle reset ----------
+const views = ["home", "vChorus", "vReel", "vToday"].map(id => document.getElementById(id));
+let stopCurrent = null, idleTimer = null;
+const IDLE_MS = 90000;
+
+function show(id) {
+  if (stopCurrent) { stopCurrent(); stopCurrent = null; }
+  views.forEach(v => v.hidden = v.id !== id);
+  window.scrollTo(0, 0);
+  resetIdle();
+}
+function resetIdle() {
+  clearTimeout(idleTimer);
+  if (!document.getElementById("home").hidden) return;
+  idleTimer = setTimeout(() => show("home"), IDLE_MS);
+}
+["pointerdown", "keydown"].forEach(e => document.addEventListener(e, resetIdle, { passive: true }));
+document.querySelectorAll("[data-home]").forEach(b => b.addEventListener("click", () => show("home")));
+
+function tickClock() {
+  const d = new Date();
+  document.getElementById("clockTime").textContent = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  document.getElementById("clockDate").textContent = d.toLocaleDateString([], { weekday: "long", month: "long", day: "numeric" });
+}
+tickClock(); setInterval(tickClock, 15000);
+
+// ---------- Real media: the Pi drops these files next to this page. Missing files fall back to the samples. ----------
+const MEDIA = {
+  sunrise: "latest/sunrise.mp4",     // this morning's sunrise timelapse from the Look Rock webcam
+  sunriseInfo: "latest/sunrise.json",
+  reelInfo: "latest/highlights.json",
+  chorus:  "latest/chorus.mp3",      // this morning's dawn chorus audio from cam4
+  reel:    "latest/highlights.mp4",  // stitched feeder highlights
+  drawing: "latest/birds.png",       // AI hand-drawn illustration of today's birds
+  today:   "latest/today.json",      // today's detections, written by the Pi every hour
+  chorusInfo: "latest/chorus.json"   // which morning the chorus clip is from, and its species in order
+};
+const VIEW_SEC = 20;                 // every button runs this long, then returns to the start screen
+
+// Cache buster so tablets pick up the Pi's new files instead of yesterday's copies
+const bust = src => src + "?t=" + Math.floor(Date.now() / 300000);
+
+// Live data from the Pi. Stays null (and the page shows samples) until the files exist.
+let LIVE = null, CHORUS_INFO = null, SUNRISE_INFO = null, REEL_INFO = null;
+async function loadLive() {
+  try { const r = await fetch(bust(MEDIA.today)); LIVE = r.ok ? await r.json() : null; } catch (e) { LIVE = null; }
+  try { const r = await fetch(bust(MEDIA.chorusInfo)); CHORUS_INFO = r.ok ? await r.json() : null; } catch (e) { CHORUS_INFO = null; }
+  try { const r = await fetch(bust(MEDIA.sunriseInfo)); SUNRISE_INFO = r.ok ? await r.json() : null; } catch (e) { SUNRISE_INFO = null; }
+  try { const r = await fetch(bust(MEDIA.reelInfo)); REEL_INFO = r.ok ? await r.json() : null; } catch (e) { REEL_INFO = null; }
+}
+loadLive(); setInterval(loadLive, 5 * 60 * 1000);
+
+// Reload the whole page once a day (overnight, on the start screen) to pick up any page changes
+const bootDay = new Date().toDateString();
+setInterval(() => {
+  if (new Date().toDateString() !== bootDay && !document.getElementById("home").hidden) location.reload();
+}, 10 * 60 * 1000);
+
+const nameToKey = n => Object.keys(SPECIES).find(k => SPECIES[k].name === n);
+const fmtTime = hhmm => {
+  if (!hhmm) return "";
+  let [h, m] = hhmm.split(":").map(Number);
+  const ap = h < 12 ? "AM" : "PM"; h = h % 12 || 12;
+  return `${h}:${String(m).padStart(2, "0")} ${ap}`;
+};
+const fmtDay = iso => new Date(iso + "T12:00:00").toLocaleDateString([], { weekday: "long", month: "long", day: "numeric" });
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function tryVideo(el, src) {
+  return new Promise(res => {
+    let done = false;
+    const fin = ok => { if (!done) { done = true; res(ok); } };
+    el.addEventListener("loadeddata", () => fin(true), { once: true });
+    el.addEventListener("error", () => fin(false), { once: true });
+    setTimeout(() => fin(false), 2500);
+    el.src = src; el.load();
+  });
+}
+function tryImage(img, src) {
+  return new Promise(res => {
+    img.onload = () => res(true); img.onerror = () => res(false);
+    setTimeout(() => res(false), 2500);
+    img.src = src;
+  });
+}
+function runTimer(bar, timers, onDone) {
+  const start = performance.now();
+  const iv = setInterval(() => {
+    const k = Math.min(1, (performance.now() - start) / (VIEW_SEC * 1000));
+    bar.style.width = (k * 100) + "%";
+    if (k >= 1) { clearInterval(iv); onDone(); }
+  }, 100);
+  timers.push(iv);
+  return start;
+}
+
+// ---------- 1. Sunrise and dawn chorus ----------
+function startChorus() {
+  show("vChorus");
+  const chips = document.getElementById("chips"); chips.innerHTML = "";
+  const bar = document.getElementById("chorusBar"); bar.style.width = "0";
+  const vid = document.getElementById("sunVideo"), cv = document.getElementById("skyCanvas");
+  const note = document.getElementById("chorusNote");
+  vid.hidden = true; cv.hidden = false; document.getElementById("sunCap").hidden = true; document.getElementById("sunTime").hidden = true; document.getElementById("sunPlace").hidden = true;
+  note.textContent = "Recorded outside the courtyard at sunrise. This preview plays a recreated chorus.";
+  const timers = [];
+  let raf = 0, stopped = false, realAudio = null;
+
+  // Caption along the bottom of the picture: what you're hearing, then where the sunrise is from
+  const cap = document.getElementById("sunCap");
+  const kicker = document.getElementById("capKicker"), head = document.getElementById("capHead"), place = document.getElementById("sunPlace");
+  const setLower = (k, names, fallback) => {
+    head.textContent = names && names.length ? `${k}: ${names.join(" · ")}` : (fallback || k);
+    cap.hidden = false;
+  };
+  const listNames = names => names.length < 3 ? names.join(" and ") : names.slice(0, -1).join(", ") + ", and " + names[names.length - 1];
+
+  // Audio context is created inside the tap so the tablet allows sound.
+  const AC = window.AudioContext || window.webkitAudioContext;
+  let ctx = null; try { ctx = new AC(); } catch (e) {}
+
+  // Real sunrise video if the file exists
+  tryVideo(vid, bust(MEDIA.sunrise)).then(ok => {
+    if (ok && !stopped) {
+      cv.hidden = true; vid.hidden = false; vid.currentTime = 0; vid.play().catch(() => {});
+      const today = new Date().toLocaleDateString("en-CA");
+      const when = SUNRISE_INFO && SUNRISE_INFO.date && SUNRISE_INFO.date !== today ? `on ${fmtDay(SUNRISE_INFO.date)}` : "this morning";
+      place.textContent = `Sunrise at Look Rock, Great Smoky Mountains ${when}`;
+      place.hidden = false;
+      // Clock showing when each webcam photo was taken, ticking forward as the timelapse plays
+      const times = SUNRISE_INFO && Array.isArray(SUNRISE_INFO.times) ? SUNRISE_INFO.times : [];
+      const clock = document.getElementById("sunTime");
+      if (times.length) {
+        const mins = times.map(t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; });
+        const tick = () => {
+          if (stopped) return;
+          const dur = vid.duration || VIEW_SEC, slot = dur / mins.length;
+          const i = Math.min(mins.length - 1, Math.floor(vid.currentTime / slot));
+          const frac = Math.min(1, (vid.currentTime - i * slot) / slot);
+          const m = i < mins.length - 1 ? mins[i] + (mins[i + 1] - mins[i]) * frac : mins[i];
+          const hh = Math.floor(m / 60), mm = Math.floor(m % 60);
+          clock.textContent = fmtTime(`${hh}:${String(mm).padStart(2, "0")}`);
+          requestAnimationFrame(tick);
+        };
+        clock.hidden = false; tick();
+      }
+    }
+  });
+
+  // Real chorus audio if the file exists, otherwise a recreated one
+  const au = new Audio(); au.preload = "auto";
+  let decided = false;
+  const useSynth = () => { if (decided || stopped) return; decided = true; synth(); };
+  const useReal = () => {
+    if (decided || stopped) return; decided = true; realAudio = au;
+    const today = new Date().toLocaleDateString("en-CA");
+    note.textContent = CHORUS_INFO && CHORUS_INFO.date && CHORUS_INFO.date !== today
+      ? `Recorded outside at sunrise on ${fmtDay(CHORUS_INFO.date)}.`
+      : "Recorded outside at sunrise this morning.";
+    const heardWhen = CHORUS_INFO && CHORUS_INFO.date && CHORUS_INFO.date !== today ? `on ${fmtDay(CHORUS_INFO.date)}` : "this morning";
+    const names = CHORUS_INFO && Array.isArray(CHORUS_INFO.order) ? [...new Set(CHORUS_INFO.order)] : [];
+    setLower(`Heard at Clemson Downs ${heardWhen}`, names, `Birds heard at Clemson Downs ${heardWhen}`);
+    showChips(CHORUS_INFO && CHORUS_INFO.order && CHORUS_INFO.order.length ? CHORUS_INFO.order : null, CHORUS_INFO && CHORUS_INFO.clip_sec || 3);
+    au.currentTime = 0; au.play().catch(useSynthForce);
+  };
+  const useSynthForce = () => { realAudio = null; synth(); };
+  au.addEventListener("canplay", useReal, { once: true });
+  au.addEventListener("error", useSynth, { once: true });
+  timers.push(setTimeout(useSynth, 1500));
+  au.src = bust(MEDIA.chorus);
+
+  function synth() {
+    showChips(null, 3);
+    setLower("Sample birdsong", null, "Sample birdsong · Clemson Downs recordings start after sunrise");
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const master = ctx.createGain(); master.gain.value = 0.0001; master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.9, now + 1.5);
+    master.gain.setValueAtTime(0.9, now + VIEW_SEC - 3);
+    master.gain.linearRampToValueAtTime(0.0001, now + VIEW_SEC - 0.5);
+    const len = ctx.sampleRate * 2, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+    let last = 0; for (let i = 0; i < len; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3; }
+    const air = ctx.createBufferSource(); air.buffer = buf; air.loop = true;
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900;
+    const ag = ctx.createGain(); ag.gain.value = 0.18;
+    air.connect(lp).connect(ag).connect(master); air.start();
+
+    const tone = (t, f0, f1, dur, vol, pan) => {
+      const o = ctx.createOscillator(), g = ctx.createGain(), p = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+      o.type = "sine"; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      if (p) { p.pan.value = pan; o.connect(g).connect(p).connect(master); } else { o.connect(g).connect(master); }
+      o.start(t); o.stop(t + dur + 0.05);
+    };
+    const songs = {
+      cardinal: (t, p) => { for (let i = 0; i < 4; i++) tone(t + i * 0.32, 3800, 1900, 0.24, 0.12, p); for (let i = 0; i < 6; i++) tone(t + 1.4 + i * 0.1, 2600, 2300, 0.07, 0.08, p); return 2.2; },
+      titmouse: (t, p) => { for (let i = 0; i < 4; i++) { tone(t + i * 0.36, 3300, 3000, 0.12, 0.1, p); tone(t + i * 0.36 + 0.15, 2500, 2400, 0.14, 0.09, p); } return 1.5; },
+      chickadee: (t, p) => { tone(t, 4100, 3950, 0.32, 0.08, p); tone(t + 0.4, 3500, 3350, 0.3, 0.07, p); tone(t + 0.75, 3500, 3450, 0.25, 0.06, p); return 1.1; },
+      wren: (t, p) => { for (let i = 0; i < 4; i++) { const b = t + i * 0.34; tone(b, 3200, 4200, 0.08, 0.13, p); tone(b + 0.1, 4000, 2900, 0.1, 0.12, p); tone(b + 0.22, 2800, 2600, 0.08, 0.1, p); } return 1.4; },
+      goldfinch: (t, p) => { let x = t; for (let i = 0; i < 14; i++) { const f = 4200 + Math.random() * 2000; tone(x, f, f * (0.85 + Math.random() * 0.3), 0.05, 0.05, p); x += 0.06 + Math.random() * 0.07; } return x - t; }
+    };
+    const pans = { cardinal: -0.6, titmouse: 0.5, chickadee: -0.2, wren: 0.7, goldfinch: 0.1 };
+    const t0 = now + 0.3;
+    CHORUS_ORDER.forEach((sp, idx) => {
+      let t = 0.5 + idx * 3;
+      while (t < VIEW_SEC - 3) { t += songs[sp](t0 + t, pans[sp]) + 1 + Math.random() * 2; }
+    });
+  }
+
+  // Species chips appear one by one, in step with the clips in the real chorus
+  let chipsShown = false;
+  function showChips(names, step) {
+    if (chipsShown) return; chipsShown = true;
+    const list = names || CHORUS_ORDER.map(k => SPECIES[k].name);
+    const seen = new Set();
+    list.forEach((name, idx) => {
+      if (seen.has(name)) return; seen.add(name);
+      timers.push(setTimeout(() => {
+        const k = nameToKey(name);
+        const c = document.createElement("span"); c.className = "chip";
+        c.innerHTML = (k ? birdSVG(k, { branch: false }) : "") + esc(name); chips.appendChild(c);
+      }, (0.4 + idx * step) * 1000));
+    });
+  }
+  // Painted sunrise stands in until the sunrise camera is set up
+  const cx = cv.getContext("2d");
+  const start = runTimer(bar, timers, () => show("home"));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const frame = (nowT) => {
+    const k = reduce ? 0.6 : Math.min(1, (nowT - start) / (VIEW_SEC * 1000));
+    const W = cv.width, H = cv.height;
+    const sky = cx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, `hsl(${215 - k * 15}, ${35 + k * 20}%, ${18 + k * 40}%)`);
+    sky.addColorStop(0.7, `hsl(${25 + k * 10}, ${55 + k * 20}%, ${45 + k * 22}%)`);
+    sky.addColorStop(1, `hsl(42, 85%, ${60 + k * 15}%)`);
+    cx.fillStyle = sky; cx.fillRect(0, 0, W, H);
+    const sunY = H * 0.86 - k * H * 0.38;
+    cx.fillStyle = `rgba(255, 214, 120, ${0.25 + k * 0.5})`;
+    cx.beginPath(); cx.arc(W * 0.62, sunY, 90, 0, Math.PI * 2); cx.fill();
+    cx.fillStyle = "#ffe7a8"; cx.beginPath(); cx.arc(W * 0.62, sunY, 55, 0, Math.PI * 2); cx.fill();
+    cx.fillStyle = "#1d2b25";
+    cx.beginPath(); cx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 20) cx.lineTo(x, H * 0.8 - Math.abs(Math.sin(x * 0.031) * 60) - Math.abs(Math.sin(x * 0.11) * 18));
+    cx.lineTo(W, H); cx.fill();
+    if (!stopped && !reduce && k < 1) raf = requestAnimationFrame(frame);
+  };
+  raf = requestAnimationFrame(frame);
+
+  stopCurrent = () => {
+    stopped = true; cancelAnimationFrame(raf);
+    timers.forEach(t => { clearTimeout(t); clearInterval(t); });
+    au.pause(); au.removeAttribute("src");
+    vid.pause();
+    if (ctx) ctx.close().catch(() => {});
+  };
+}
+const CHORUS_ORDER = ["cardinal", "titmouse", "chickadee", "wren", "goldfinch"];
+
+// ---------- 2. Feeder highlights ----------
+const CLIPS = [
+  { sp: "cardinal",  time: "6:52 AM", conf: 0.96 },
+  { sp: "chickadee", time: "7:31 AM", conf: 0.93 },
+  { sp: "downy",     time: "8:05 AM", conf: 0.88 },
+  { sp: "goldfinch", time: "9:47 AM", conf: 0.91 },
+  { sp: "titmouse",  time: "2:38 PM", conf: 0.94 }
+];
+function startReel() {
+  show("vReel");
+  const reel = document.getElementById("reel"), bar = document.getElementById("reelBar"), vid = document.getElementById("reelVideo");
+  bar.style.width = "0"; vid.hidden = true;
+  const place = document.getElementById("reelPlace"), clock = document.getElementById("reelTime");
+  place.hidden = true; clock.hidden = true;
+  const timers = [];
+  let stopped = false;
+  const slideMs = VIEW_SEC * 1000 / CLIPS.length;
+  reel.innerHTML = CLIPS.map(c => `
+    <div class="slide">
+      <div class="stage">${birdSVG(c.sp)}</div>
+      <div class="cap"><b>${SPECIES[c.sp].name}</b><span>${c.time} · match ${Math.round(c.conf * 100)}%</span></div>
+    </div>`).join("");
+  const slides = [...reel.children];
+  let i = 0; slides[0].classList.add("on");
+  const iv = setInterval(() => {
+    slides[i].classList.remove("on"); i = Math.min(i + 1, slides.length - 1);
+    const s = slides[i]; s.classList.add("on");
+    const st = s.querySelector(".stage"); st.style.animation = "none"; void st.offsetWidth; st.style.animation = "";
+  }, slideMs);
+  timers.push(iv);
+  tryVideo(vid, bust(MEDIA.reel)).then(ok => {
+    if (ok && !stopped) {
+      clearInterval(iv); reel.hidden = true; vid.hidden = false; vid.currentTime = 0; vid.play().catch(() => {});
+      const today = new Date().toLocaleDateString("en-CA");
+      const when = REEL_INFO && REEL_INFO.date && REEL_INFO.date !== today ? `on ${fmtDay(REEL_INFO.date)}` : "today";
+      place.textContent = `Bird feeder at Clemson Downs ${when}`;
+      place.hidden = false;
+      // Time of each visit, switching as the reel moves from one visit to the next
+      const times = REEL_INFO && Array.isArray(REEL_INFO.times) ? REEL_INFO.times : [];
+      if (times.length) {
+        const step = (REEL_INFO.clip_sec || 5) - (typeof REEL_INFO.xfade === "number" ? REEL_INFO.xfade : 0.5);
+        const tick = () => {
+          if (stopped) return;
+          const i = Math.min(times.length - 1, Math.floor((vid.currentTime + 0.25) / step));
+          clock.textContent = fmtTime(times[i]);
+          requestAnimationFrame(tick);
+        };
+        clock.hidden = false; tick();
+      }
+    }
+  });
+  runTimer(bar, timers, () => show("home"));
+  stopCurrent = () => { stopped = true; timers.forEach(t => clearInterval(t)); vid.pause(); reel.hidden = false; };
+}
+
+// ---------- 3. Today's birds ----------
+const TODAY = [
+  { sp: "cardinal",  n: 41, first: "6:48 AM" },
+  { sp: "wren",      n: 37, first: "6:55 AM" },
+  { sp: "titmouse",  n: 29, first: "7:02 AM" },
+  { sp: "chickadee", n: 24, first: "7:10 AM" },
+  { sp: "goldfinch", n: 18, first: "8:21 AM" },
+  { sp: "finch",     n: 15, first: "8:40 AM" },
+  { sp: "downy",     n: 9,  first: "9:15 AM" },
+  { sp: "nuthatch",  n: 6,  first: "10:33 AM" }
+];
+const HOURLY = [0,0,0,0,0,1,6,34,28,19,14,10,8,6,7,9,12,14,9,3,0,0,0,0];
+function startToday() {
+  show("vToday");
+  const bar = document.getElementById("todayBar"); bar.style.width = "0";
+  const timers = [];
+  const live = LIVE && Array.isArray(LIVE.hourly) && Array.isArray(LIVE.species);
+  const hourly = live ? LIVE.hourly : HOURLY;
+  const max = Math.max(1, ...hourly);
+  document.getElementById("bars").innerHTML = hourly.map(v =>
+    `<i class="${v === max && v > 0 ? "peak" : ""}" style="height:${Math.max(3, v / max * 100)}%" title="${v} songs"></i>`).join("");
+  document.getElementById("hours").innerHTML = hourly.map((_, h) =>
+    `<span>${h % 6 === 0 ? (h === 0 ? "12a" : h === 12 ? "12p" : h < 12 ? h + "a" : (h - 12) + "p") : ""}</span>`).join("");
+  const guide = document.getElementById("guide"), note = document.getElementById("todayNote");
+  if (live) {
+    guide.innerHTML = LIVE.species.length
+      ? LIVE.species.map(b => {
+          const k = nameToKey(b.name);
+          return `<div class="card">${k ? birdSVG(k) : ""}<b>${esc(b.name)}</b><span>Heard ${b.count} time${b.count === 1 ? "" : "s"} · first at ${fmtTime(b.first)}</span></div>`;
+        }).join("")
+      : `<div class="card"><b>Quiet so far today</b><span>Check back after sunrise.</span></div>`;
+    note.textContent = `${LIVE.species.length} species heard today · updated ${fmtTime((LIVE.updated || "").slice(11, 16))}`;
+  } else {
+    guide.innerHTML = TODAY.map(b => `
+      <div class="card">${birdSVG(b.sp)}<b>${SPECIES[b.sp].name}</b><span>Heard ${b.n} times · first at ${b.first}</span></div>`).join("");
+    note.textContent = "Sample day shown.";
+  }
+  const box = document.getElementById("drawing"); box.hidden = true;
+  tryImage(document.getElementById("drawingImg"), bust(MEDIA.drawing)).then(ok => { box.hidden = !ok; });
+  runTimer(bar, timers, () => show("home"));
+  stopCurrent = () => timers.forEach(t => clearInterval(t));
+}
+
+document.getElementById("tChorus").addEventListener("click", startChorus);
+document.getElementById("tReel").addEventListener("click", startReel);
+document.getElementById("tToday").addEventListener("click", startToday);
+</script>
+
+</body></html>

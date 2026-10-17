@@ -1,0 +1,50 @@
+{
+ "date": "2026-10-17",
+ "updated": "2026-10-17T19:05:02",
+ "species": [
+  {
+   "name": "Carolina Wren",
+   "sci": "Thryothorus ludovicianus",
+   "count": 6,
+   "first": "08:53"
+  },
+  {
+   "name": "Carolina Chickadee",
+   "sci": "Poecile carolinensis",
+   "count": 2,
+   "first": "08:55"
+  },
+  {
+   "name": "Eastern Bluebird",
+   "sci": "Sialia sialis",
+   "count": 1,
+   "first": "08:53"
+  }
+ ],
+ "hourly": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  6,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  3,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ]
+}
