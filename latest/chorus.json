@@ -1,0 +1,19 @@
+{
+ "date": "2026-10-24",
+ "clip_sec": 3.0,
+ "style": 3,
+ "order": [
+  "Eastern Bluebird",
+  "Eastern Bluebird",
+  "Eastern Bluebird",
+  "Eastern Bluebird",
+  "Eastern Bluebird"
+ ],
+ "clips": [
+  "2026/10/sialia_sialis_85p_20261024T090647Z.flac",
+  "2026/10/sialia_sialis_82p_20261024T090740Z.flac",
+  "2026/10/sialia_sialis_82p_20261024T090854Z.flac",
+  "2026/10/sialia_sialis_72p_20261024T091804Z.flac",
+  "2026/10/sialia_sialis_95p_20261024T091844Z.flac"
+ ]
+}
