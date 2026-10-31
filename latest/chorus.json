@@ -1,0 +1,23 @@
+{
+ "date": "2026-10-31",
+ "clip_sec": 3.0,
+ "style": 3,
+ "order": [
+  "Carolina Wren",
+  "Carolina Wren",
+  "Carolina Wren",
+  "Carolina Wren",
+  "Eastern Bluebird",
+  "Eastern Bluebird",
+  "Tufted Titmouse"
+ ],
+ "clips": [
+  "2026/10/thryothorus_ludovicianus_89p_20261031T071227Z.flac",
+  "2026/10/thryothorus_ludovicianus_89p_20261031T071241Z.flac",
+  "2026/10/thryothorus_ludovicianus_90p_20261031T075444Z.flac",
+  "2026/10/thryothorus_ludovicianus_98p_20261031T090847Z.flac",
+  "2026/10/sialia_sialis_92p_20261031T091741Z.flac",
+  "2026/10/sialia_sialis_92p_20261031T092013Z.flac",
+  "2026/10/baeolophus_bicolor_98p_20261031T092243Z.flac"
+ ]
+}
