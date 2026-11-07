@@ -1,0 +1,23 @@
+{
+ "date": "2026-11-07",
+ "clip_sec": 3.0,
+ "style": 3,
+ "order": [
+  "Carolina Wren",
+  "Red-shouldered Hawk",
+  "Eastern Towhee",
+  "Eastern Towhee",
+  "Eastern Bluebird",
+  "Eastern Bluebird",
+  "Red-shouldered Hawk"
+ ],
+ "clips": [
+  "2026/11/thryothorus_ludovicianus_90p_20261107T061044Z.flac",
+  "2026/11/buteo_lineatus_97p_20261107T075014Z.flac",
+  "2026/11/pipilo_erythrophthalmus_99p_20261107T084328Z.flac",
+  "2026/11/pipilo_erythrophthalmus_99p_20261107T084656Z.flac",
+  "2026/11/sialia_sialis_99p_20261107T085325Z.flac",
+  "2026/11/sialia_sialis_96p_20261107T085341Z.flac",
+  "2026/11/buteo_lineatus_80p_20261107T091843Z.flac"
+ ]
+}

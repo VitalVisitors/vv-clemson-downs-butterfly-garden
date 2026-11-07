@@ -1,0 +1,192 @@
+{
+ "date": "2026-11-07",
+ "updated": "2026-11-07T11:05:03",
+ "species": [
+  {
+   "name": "Eastern Towhee",
+   "sci": "Pipilo erythrophthalmus",
+   "count": 18,
+   "first": "08:43",
+   "times": [
+    "08:43",
+    "08:44",
+    "08:46",
+    "08:47",
+    "08:52",
+    "08:53",
+    "08:54",
+    "08:55",
+    "08:56",
+    "09:06",
+    "10:14",
+    "10:22",
+    "10:38",
+    "10:39",
+    "10:41"
+   ],
+   "best": [
+    [
+     8,
+     9
+    ]
+   ],
+   "slug": "eastern-towhee",
+   "mass_g": 40.0,
+   "art": "birds/eastern-towhee.webp"
+  },
+  {
+   "name": "Carolina Wren",
+   "sci": "Thryothorus ludovicianus",
+   "count": 8,
+   "first": "05:56",
+   "times": [
+    "05:56",
+    "06:10",
+    "06:11",
+    "08:13",
+    "09:11",
+    "09:25",
+    "10:16"
+   ],
+   "best": [
+    [
+     7,
+     10
+    ]
+   ],
+   "slug": "carolina-wren",
+   "mass_g": 19.0,
+   "art": "birds/carolina-wren.webp"
+  },
+  {
+   "name": "Tufted Titmouse",
+   "sci": "Baeolophus bicolor",
+   "count": 5,
+   "first": "09:43",
+   "times": [
+    "09:43",
+    "10:21",
+    "10:22",
+    "10:23",
+    "10:25"
+   ],
+   "best": [
+    [
+     8,
+     11
+    ],
+    [
+     13,
+     14
+    ]
+   ],
+   "slug": "tufted-titmouse",
+   "mass_g": 21.6,
+   "art": "birds/tufted-titmouse.webp"
+  },
+  {
+   "name": "Red-shouldered Hawk",
+   "sci": "Buteo lineatus",
+   "count": 3,
+   "first": "07:50",
+   "times": [
+    "07:50",
+    "08:36",
+    "09:18"
+   ],
+   "best": [
+    [
+     8,
+     9
+    ]
+   ],
+   "slug": "red-shouldered-hawk",
+   "mass_g": 603.7,
+   "art": "birds/red-shouldered-hawk.webp"
+  },
+  {
+   "name": "Eastern Bluebird",
+   "sci": "Sialia sialis",
+   "count": 2,
+   "first": "08:53",
+   "times": [
+    "08:53"
+   ],
+   "best": [
+    [
+     9,
+     10
+    ]
+   ],
+   "slug": "eastern-bluebird",
+   "mass_g": 27.5,
+   "art": "birds/eastern-bluebird.webp"
+  },
+  {
+   "name": "Blue Jay",
+   "sci": "Cyanocitta cristata",
+   "count": 2,
+   "first": "10:18",
+   "times": [
+    "10:18"
+   ],
+   "best": [
+    [
+     13,
+     14
+    ]
+   ],
+   "slug": "blue-jay",
+   "mass_g": 88.0,
+   "art": "birds/blue-jay.webp"
+  },
+  {
+   "name": "White-breasted Nuthatch",
+   "sci": "Sitta carolinensis",
+   "count": 1,
+   "first": "09:37",
+   "times": [
+    "09:37"
+   ],
+   "best": [
+    [
+     12,
+     14
+    ],
+    [
+     16,
+     17
+    ]
+   ],
+   "slug": "white-breasted-nuthatch",
+   "mass_g": 21.0,
+   "art": "birds/white-breasted-nuthatch.webp"
+  }
+ ],
+ "hourly": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  2,
+  1,
+  16,
+  6,
+  13,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ]
+}
