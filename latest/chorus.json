@@ -1,0 +1,23 @@
+{
+ "date": "2026-11-14",
+ "clip_sec": 3.0,
+ "style": 3,
+ "order": [
+  "Eastern Bluebird",
+  "Red-bellied Woodpecker",
+  "Carolina Wren",
+  "Blue Jay",
+  "Blue Jay",
+  "Blue Jay",
+  "Blue Jay"
+ ],
+ "clips": [
+  "2026/11/sialia_sialis_86p_20261114T085412Z.flac",
+  "2026/11/melanerpes_carolinus_84p_20261114T090320Z.flac",
+  "2026/11/thryothorus_ludovicianus_76p_20261114T091252Z.flac",
+  "2026/11/cyanocitta_cristata_82p_20261114T091355Z.flac",
+  "2026/11/cyanocitta_cristata_86p_20261114T091418Z.flac",
+  "2026/11/cyanocitta_cristata_83p_20261114T091450Z.flac",
+  "2026/11/cyanocitta_cristata_83p_20261114T091541Z.flac"
+ ]
+}
