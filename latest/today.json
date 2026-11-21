@@ -1,0 +1,143 @@
+{
+ "date": "2026-11-21",
+ "updated": "2026-11-21T14:05:03",
+ "species": [
+  {
+   "name": "Blue Jay",
+   "sci": "Cyanocitta cristata",
+   "count": 4,
+   "first": "10:25",
+   "times": [
+    "10:25",
+    "12:25",
+    "13:16"
+   ],
+   "best": [
+    [
+     7,
+     10
+    ],
+    [
+     13,
+     14
+    ]
+   ],
+   "slug": "blue-jay",
+   "mass_g": 88.0,
+   "art": "birds/blue-jay.webp"
+  },
+  {
+   "name": "Red-bellied Woodpecker",
+   "sci": "Melanerpes carolinus",
+   "count": 3,
+   "first": "09:23",
+   "times": [
+    "09:23",
+    "12:26",
+    "13:26"
+   ],
+   "best": [
+    [
+     9,
+     12
+    ],
+    [
+     15,
+     17
+    ]
+   ],
+   "slug": "red-bellied-woodpecker",
+   "mass_g": 69.5,
+   "art": "birds/red-bellied-woodpecker.webp"
+  },
+  {
+   "name": "Dunlin",
+   "sci": "Calidris alpina",
+   "count": 2,
+   "first": "10:22",
+   "times": [
+    "10:22",
+    "12:11"
+   ],
+   "best": [
+    [
+     13,
+     14
+    ]
+   ],
+   "slug": "dunlin",
+   "mass_g": 51.9,
+   "art": "birds/dunlin.webp"
+  },
+  {
+   "name": "Red-shouldered Hawk",
+   "sci": "Buteo lineatus",
+   "count": 1,
+   "first": "12:24",
+   "times": [
+    "12:24"
+   ],
+   "best": [
+    [
+     8,
+     9
+    ],
+    [
+     15,
+     16
+    ]
+   ],
+   "slug": "red-shouldered-hawk",
+   "mass_g": 603.7,
+   "art": "birds/red-shouldered-hawk.webp"
+  },
+  {
+   "name": "Eastern Bluebird",
+   "sci": "Sialia sialis",
+   "count": 1,
+   "first": "12:01",
+   "times": [
+    "12:01"
+   ],
+   "best": [
+    [
+     8,
+     11
+    ],
+    [
+     13,
+     16
+    ]
+   ],
+   "slug": "eastern-bluebird",
+   "mass_g": 27.5,
+   "art": "birds/eastern-bluebird.webp"
+  }
+ ],
+ "hourly": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  2,
+  0,
+  6,
+  2,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ]
+}

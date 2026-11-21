@@ -1,0 +1,19 @@
+{
+ "date": "2026-11-20",
+ "clip_sec": 3.0,
+ "style": 3,
+ "order": [
+  "Blue Jay",
+  "Blue Jay",
+  "Tufted Titmouse",
+  "Blue Jay",
+  "Tufted Titmouse"
+ ],
+ "clips": [
+  "2026/11/cyanocitta_cristata_94p_20261120T074536Z.flac",
+  "2026/11/cyanocitta_cristata_70p_20261120T074603Z.flac",
+  "2026/11/baeolophus_bicolor_76p_20261120T085751Z.flac",
+  "2026/11/cyanocitta_cristata_86p_20261120T090144Z.flac",
+  "2026/11/baeolophus_bicolor_77p_20261120T090241Z.flac"
+ ]
+}
