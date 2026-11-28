@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-28",
+ "updated": "2026-11-28T11:05:03",
+ "species": [
+  {
+   "name": "Tufted Titmouse",
+   "sci": "Baeolophus bicolor",
+   "count": 14,
+   "first": "08:15",
+   "times": [
+    "08:15",
+    "08:16",
+    "08:19",
+    "08:24",
+    "08:25",
+    "09:45",
+    "09:50",
+    "09:51",
+    "09:52",
+    "10:36"
+   ],
+   "best": [
+    [
+     8,
+     10
+    ],
+    [
+     12,
+     13
+    ]
+   ],
+   "slug": "tufted-titmouse",
+   "mass_g": 21.6,
+   "art": "birds/tufted-titmouse.webp"
+  },
+  {
+   "name": "Eastern Bluebird",
+   "sci": "Sialia sialis",
+   "count": 8,
+   "first": "09:35",
+   "times": [
+    "09:35",
+    "09:36",
+    "09:40",
+    "09:41",
+    "09:47",
+    "10:30"
+   ],
+   "best": [
+    [
+     8,
+     11
+    ]
+   ],
+   "slug": "eastern-bluebird",
+   "mass_g": 27.5,
+   "art": "birds/eastern-bluebird.webp"
+  },
+  {
+   "name": "Red-shouldered Hawk",
+   "sci": "Buteo lineatus",
+   "count": 3,
+   "first": "07:19",
+   "times": [
+    "07:19",
+    "07:36",
+    "07:41"
+   ],
+   "best": [
+    [
+     7,
+     8
+    ],
+    [
+     14,
+     16
+    ]
+   ],
+   "slug": "red-shouldered-hawk",
+   "mass_g": 603.7,
+   "art": "birds/red-shouldered-hawk.webp"
+  },
+  {
+   "name": "Red-bellied Woodpecker",
+   "sci": "Melanerpes carolinus",
+   "count": 1,
+   "first": "09:45",
+   "times": [
+    "09:45"
+   ],
+   "best": [
+    [
+     9,
+     12
+    ]
+   ],
+   "slug": "red-bellied-woodpecker",
+   "mass_g": 69.5,
+   "art": "birds/red-bellied-woodpecker.webp"
+  }
+ ],
+ "hourly": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  3,
+  8,
+  13,
+  2,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ]
+}

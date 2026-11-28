@@ -1,0 +1,23 @@
+{
+ "date": "2026-11-28",
+ "clip_sec": 3.0,
+ "style": 5,
+ "order": [
+  "Tufted Titmouse",
+  "Tufted Titmouse",
+  "Red-shouldered Hawk",
+  "Red-shouldered Hawk",
+  "Red-shouldered Hawk",
+  "Tufted Titmouse",
+  "Tufted Titmouse"
+ ],
+ "clips": [
+  "2026/11/baeolophus_bicolor_93p_20261128T081516Z.flac",
+  "2026/11/baeolophus_bicolor_84p_20261128T081938Z.flac",
+  "2026/11/buteo_lineatus_94p_20261128T071922Z.flac",
+  "2026/11/buteo_lineatus_93p_20261128T073602Z.flac",
+  "2026/11/buteo_lineatus_85p_20261128T074159Z.flac",
+  "2026/11/baeolophus_bicolor_90p_20261128T082423Z.flac",
+  "2026/11/baeolophus_bicolor_87p_20261128T082535Z.flac"
+ ]
+}
